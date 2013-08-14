@@ -4,8 +4,6 @@
 
 这里储存的是MsUpload9.4版本，萌娘百科正在使用的版本可以在 https://github.com/moegirlwiki/Moegirlwiki/tree/develop/extensions/MsUpload 找到
 
-你愿意的话可以直接在这里改，也可以去 https://github.com/moegirlwiki/Moegirlwiki/tree/develop/extensions/MsUpload 这个dev版本改。dev版本更改后会直接同步到测试wiki上。
-
 
 
 http://see.sl088.com/wiki/%E6%89%A9%E5%B1%95:MsUpload ←这里的一些内容可能会(帮助or阻止)你理解这个插件。
