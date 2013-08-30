@@ -312,3 +312,16 @@ a.hover {
 #upload_bottom #gallery_insert{
 }
 
+/* moegirl-special */
+.morgirl-special label {
+  display: block;
+}
+.morgirl-special span {
+  display: inline-block;
+  width: 5em;
+  text-align: right;
+  margin-right: .5em;
+}
+.morgirl-special input {
+  width: 30em;
+}
