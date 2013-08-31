@@ -106,6 +106,12 @@ function createUpload(wikiEditor){
 	            file.li.warning = $(document.createElement("span")).attr("class","file-warning").appendTo(file.li);
 	            
 	            check_extension(file,up); 
+                
+                // moegirl-special FilesAdded (after check_extension)
+                file.li.special = $('<div class="morgirl-special"></div>').appendTo(file.li);
+                file.li.special.author = $('<label><span>&lt;作者&gt;</span><input class="mgs-author" /></label>').appendTo(file.li.special);
+                file.li.special.source = $('<label><span>&lt;源地址&gt;</span><input class="mgs-source" /></label>').appendTo(file.li.special);
+                // /moegirl-special FilesAdded (after check_extension)
     		});
 
     		up.refresh(); // Reposition Flash/Silverlight
@@ -144,6 +150,17 @@ function createUpload(wikiEditor){
     	$('#' + file.id + " div.file-progress-bar").progressbar({value: '1'});
     	$('#' + file.id + " span.file-progress-state").html("0%");
     	
+        // moegirl-special BeforeUpload
+        var comment = [],
+            mgs_author = file.li.special.author.find('input').attr('readonly', true).val(),
+            mgs_source = file.li.special.source.find('input').attr('readonly', true).val();
+        comment.push('[[分类:', mw.config.get("wgPageName"), ']]');
+        if (mgs_author) comment.push(' [[分类:作者:', mgs_author, ']]');
+        if (mgs_source) comment.push(' 源地址:[', mgs_source, ']');
+        
+        up.settings.multipart_params.comment = comment.join('');
+        // /moegirl-special BeforeUpload
+        
      });
       
      uploader.bind('UploadProgress', function(up, file) {
@@ -173,6 +190,10 @@ function createUpload(wikiEditor){
         $('#' + file.id + " div.file-progress-bar").fadeOut("slow");
         $('#' + file.id + " span.file-progress-state").fadeOut("slow");
             
+            
+        // moegirl-special FileUploaded
+        file.li.special.find('input').attr('readonly', false);
+        // /moegirl-special FileUploaded
             
 		try{
 			result = jQuery.parseJSON( success.response );
@@ -204,6 +225,10 @@ function createUpload(wikiEditor){
 							"bitdepth":8
 			}}}*/
 			
+            // moegirl-special FileUploaded
+            file.li.special.slideUp("slow");
+            // /moegirl-special FileUploaded
+            
 			file.li.type.addClass('ok');
             file.li.addClass('green');
             file.li.warning.fadeOut("slow");
@@ -248,7 +273,7 @@ function createUpload(wikiEditor){
         		$(document.createElement("span")).text(' | ').appendTo(file.li);
         		$(document.createElement("a")).text(mw.msg('msu-insert_picture')).click(function(e) { //click
         			
-        			mw.toolbar.insertTags( '[[File:'+file.name+msu_vars.imgParams+']]','','','');
+        			mw.toolbar.insertTags( '[[File:'+file.name+(msu_vars.imgParams||'')+']]','','','');
         		
         		}).appendTo(file.li);
         		
